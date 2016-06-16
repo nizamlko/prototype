@@ -13,8 +13,8 @@ var ROUTES = {
 
  class Main extends Component {
 	renderScene(route, navigator) {
-		//var Component = ROUTES[route.name];
-		return <Login route={route} navigator={navigator} />;
+		var Component = ROUTES[route.name];
+		return <Component route={route} navigator={navigator} />;
 	}
 	
 	render() {
