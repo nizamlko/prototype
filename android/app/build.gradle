@@ -2,6 +2,10 @@ apply plugin: "com.android.application"
 
 import com.android.build.OutputFile
 
+project.ext.react = [
+    bundleInDebug     : true,
+    bundleInRelease   : true
+]
 /**
  * The react.gradle file registers a task for each build variant (e.g. bundleDebugJsAndAssets
  * and bundleReleaseJsAndAssets).
@@ -19,7 +23,7 @@ import com.android.build.OutputFile
  *   entryFile: "index.android.js",
  *
  *   // whether to bundle JS and assets in debug mode
- *   bundleInDebug: false,
+ *   bundleInDebug: true,
  *
  *   // whether to bundle JS and assets in release mode
  *   bundleInRelease: true,
