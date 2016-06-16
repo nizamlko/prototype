@@ -6,10 +6,13 @@ import {
  
 var Login = require('./components/login');
 var Channels = require('./components/channels');
+var Chat = require('./components/chat');
  
 var ROUTES = {
   login: Login,
-  channels: Channels
+  channels: Channels,
+  chat: Chat
+  
 };
  
 

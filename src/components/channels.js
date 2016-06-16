@@ -60,26 +60,26 @@ class Channels extends Component{
 	
 	onChannelPress(url){
 		console.log(url);
-		 sendbird.joinChannel(
+		sendbird.joinChannel(
 			url,
 			{
-			  successFunc: (data) => {
+			successFunc: (data) => {
 				sendbird.connect({
 				  successFunc: (data) => {
 					sendbird.getChannelInfo((channel) => {
-					  console.log(channel);
+					  this.props.navigator.push({ name: 'chat' });
 					});
 				  },
 				  errorFunc: (status, error) => {
 					console.log(status, error);
 				  }
 				});
-			  },
-			  errorFunc: (status, error) => {
+			},
+			errorFunc: (status, error) => {
 				console.log(status, error);
-			  }
 			}
-		  );
+			}
+		 );
 	}
 	
 	getChannelList(page) {
