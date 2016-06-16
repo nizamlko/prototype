@@ -21,18 +21,19 @@ class Login extends Component {
 	onPress() {
 		console.log(this.state.username);
 		sendbird.init({
-		app_id: 'A7A2672C-AD11-11E4-8DAA-0A18B21C2D82',
-		guest_id: this.state.username,
-		user_name: this.state.username,
-		image_url: "",
-		access_token: "",
-		successFunc: (data) => {
-		  console.log('success');
-		},
-		errorFunc: (status, error) => {
-		  this.setState({username: ''});
-		}
-	  });
+			app_id: 'A7A2672C-AD11-11E4-8DAA-0A18B21C2D82',
+			guest_id: this.state.username,
+			user_name: this.state.username,
+			image_url: "",
+			access_token: "",
+			successFunc: (data) => {
+			  console.log('success');
+			  this.props.navigator.push({ name: 'channels' });
+			},
+			errorFunc: (status, error) => {
+			  this.setState({username: ''});
+			}
+		});
 	}
 	render() {
     return (
