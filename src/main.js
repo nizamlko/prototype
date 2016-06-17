@@ -4,10 +4,10 @@ import {
   StyleSheet,  
 } from 'react-native';
  
-var Login = require('./components/login');
+var Chat = require('./components/chat');
  
 var ROUTES = {
-  login: Login
+  chat: Chat
 };
  
 
@@ -22,7 +22,7 @@ var ROUTES = {
 		return (
 		  <Navigator
 			style={ styles.container }
-			initialRoute={ {name: 'login'} }
+			initialRoute={ {name: 'chat'} }
 			renderScene={this.renderScene.bind(this)}
 			configureScene={ (route) => { return Navigator.SceneConfigs.FloatFromRight; } }
 		  />
