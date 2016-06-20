@@ -17,7 +17,7 @@ class Chat extends Component{
 	constructor(props) {
 		super(props);
 		this.state = {
-			title:'A user3',
+			title:'A user5 ',
 			message:'',
 			messageList:[{user:"user1", message:"Message 1"}, {user:"user1", message:"Message 1"}, {user:"user1", message:"Message 1"}, {user:"user1", message:"Message 1"}, {user:"user1", message:"Message 1"}]
 		}
@@ -64,6 +64,11 @@ class Chat extends Component{
 			
 		  </View>
 		  <View style={styles.inputContainer}>
+			<View style={styles.addCustomContainer}>
+			  <TouchableHighlight onPress={() => this.onSendPress()} >
+				<Image source={require('./Images/add_custom_message.png')} />							
+			  </TouchableHighlight>
+			</View>
 			<View style={styles.textContainer}>
 			  <TextInput
 				style={styles.input}
@@ -130,23 +135,34 @@ class Chat extends Component{
       flexDirection: 'row',
       justifyContent: 'space-around',
       alignItems: 'center',
-      backgroundColor: '#ffffff'
+      backgroundColor: '#ffffff',
+	  paddingTop:0,
+		paddingBottom:0
     },
     textContainer: {
-      flex: 1,
+	  //flex: 1,		
       justifyContent: 'center'
     },
     sendContainer: {
       justifyContent: 'flex-end',
 	  backgroundColor: '#ffffff',
-      paddingRight: 10
+      paddingRight: 0
     },
+	addCustomContainer:{		
+		justifyContent: 'flex-end',
+		backgroundColor: '#4fad54',
+		paddingRight:8,
+		paddingLeft:8,
+		paddingTop:10,
+		paddingBottom:10,
+		
+	},
     sendLabel: {
       color: '#ffffff',
       fontSize: 15
     },
     input: {
-      width: windowSize.width - 70,
+      width: windowSize.width - 120,
       color: '#555555',
       paddingRight: 10,
       paddingLeft: 10,

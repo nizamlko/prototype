@@ -17,8 +17,7 @@ var ROUTES = {
 		return <Component route={route} navigator={navigator} />;
 	}
 	
-	render() {
-		
+	render() {		
 		return (
 		  <Navigator
 			style={ styles.container }
@@ -26,8 +25,7 @@ var ROUTES = {
 			renderScene={this.renderScene.bind(this)}
 			configureScene={ (route) => { return Navigator.SceneConfigs.FloatFromRight; } }
 		  />
-		);
-		
+		);		
 	}
 }
  
