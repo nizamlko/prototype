@@ -1,0 +1,30 @@
+adb reverse tcp:8081 tcp:8081
+react-native init Dictionary
+
+react-native start
+react-native run-android
+
+
+USB\VID_1EBF&PID_702A&MI_01\7&60CA0E3&0&0001
+1EBF
+echo SUBSYSTEM=="usb", ATTR{idVendor}=="1EBF", MODE="0666", GROUP="plugdev"
+
+
+ tsc -w
+
+tsc *.ts --watch
+tsc -p .
+
+adb kill-server
+
+node_modules/react-native/packager/launchPackager.command ; exit; 
+node_modules/react-native/packager/packager.sh reset-cache
+adb install -r android\app\build\outputs\apk\app-debug.apk
+
+
+
+release:
+
+react-native bundle --platform android --dev false --entry-file index.android.js \ --bundle-output android/app/src/main/assets/index.android.bundle \ --assets-dest android/app/src/main/res/
+
+cd android && ./gradlew assembleRelease

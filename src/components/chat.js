@@ -8,6 +8,7 @@ import {
   TextInput,
   ScrollView,
   Dimensions,
+  AsyncStorage,
   StyleSheet
 } from 'react-native'; 
 
@@ -67,7 +68,7 @@ class Chat extends Component{
 		  </View>
 		  <View style={styles.inputContainer}>
 			<View style={styles.addCustomContainer}>
-			  <TouchableHighlight onPress={() => this.onSendPress()} >
+			  <TouchableHighlight onPress={() => this.onCustomPress()} >
 				<Image source={require('./Images/add_custom_message.png')} />							
 			  </TouchableHighlight>
 			</View>
@@ -89,7 +90,12 @@ class Chat extends Component{
 	}
 	
 	componentWillMount() {	  
+	  console.log("componentWillMount");
 	  this.getMessages();
+	}
+	
+	componentDidMount(){
+		console.log("componentDidMount");
 	}
 	
 	getMessages() {
@@ -100,11 +106,39 @@ class Chat extends Component{
 	  console.log("onBackPress");
       this.props.navigator.pop();
     }
-	
-	onSendPress() {
-       console.log("onSendPress"+this.state.message);	   
+    onSendPress() {
+       console.log("onSendPress: "+this.state.message);
+       this.storeMessage(this.state.message);
+       this.insertMessage(this.state.message);
 	   this.setState({message: ''});
     }
+
+    onCustomPress(){
+    	console.log("onCustomPress"+this.state.message);
+    }
+
+    insertMessage(message){
+
+    }
+	
+	storeMessage(message){
+ 		var ts = new Date().getTime();
+ 		//AsyncStorage.setItem("user1", this.state.message);
+ 		let data = {};
+ 		data[ts] = message;
+ 		//var jsonData = JSON.stringify({data});
+ 		var jsonData = JSON.stringify(data);
+ 		
+ 		AsyncStorage.mergeItem('user1', jsonData, () => {
+ 			AsyncStorage.getItem('user1', (err, result) => {
+ 				console.log("success2: "+result);
+ 				var json = eval("(" + result + ")");
+ 			});
+ 		});
+ 		
+ 	} 
+
+	
 }
  
 
