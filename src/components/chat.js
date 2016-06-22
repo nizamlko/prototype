@@ -17,10 +17,13 @@ const styles = require('./styles.chat.js');
 var windowSize = Dimensions.get('window');
 
 class Chat extends Component{
+	userName:String;
 	constructor(props) {
 		super(props);
+		this.userName = this.props.userName;
+		console.log("constructor : "+this.userName);
 		this.state = {
-			title:'A user5 ',
+			title:this.props.userName?this.props.userName:"Unknown",
 			message:'',
 			messageList:[{user:"user1", message:"Message 1"}]
 		}
@@ -40,14 +43,14 @@ class Chat extends Component{
 	
 	loadMessages() {
 		console.log("getMessages");
-		AsyncStorage.getItem("user1").then((value) => {
+		AsyncStorage.getItem(this.userName).then((value) => {
         	console.log("loadMessages "+value);
         	if(!value)
         		return;
         	var jsonVal = eval("(" + value + ")");
         	var _messageList = [];
         	for (var key in jsonVal) {
-  				_messageList.push({user:"user1", message:jsonVal[key]});
+  				_messageList.push({user:this.userName, message:jsonVal[key]});
 			}
 			this.setState({messageList: this.state.messageList.concat(_messageList)});
     	}).done();
@@ -72,7 +75,7 @@ class Chat extends Component{
     }
 
     insertMessage(message){
-    	var msg ={user:"user2", message:message};
+    	var msg ={user:this.userName, message:message};
     	this.setState({messageList: this.state.messageList.concat([msg])});
     }
 	
@@ -84,12 +87,12 @@ class Chat extends Component{
  		//var jsonData = JSON.stringify({data});
  		var jsonData = JSON.stringify(data);
  		if(message =="clear"){
- 			AsyncStorage.removeItem('user1',()=>{});
+ 			AsyncStorage.removeItem(this.userName,()=>{});
  			return;
  		}
  		
- 		AsyncStorage.mergeItem('user1', jsonData, () => {
- 			AsyncStorage.getItem('user1', (err, result) => {
+ 		AsyncStorage.mergeItem(this.userName, jsonData, () => {
+ 			AsyncStorage.getItem(this.userName, (err, result) => {
  				console.log("success2: "+result);
  				var json = eval("(" + result + ")");
  			});
@@ -98,7 +101,7 @@ class Chat extends Component{
  	} 
 
  	render() {
-    
+    console.log("render passprops "+this.props);
 	var list = this.state.messageList.map((item, index) => {
 		return (
 		  <View

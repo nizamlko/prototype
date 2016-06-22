@@ -39,6 +39,7 @@ var ROUTES = {
    }
 
 	renderScene(route, navigator) {
+		console.log(route.passProps);
 		var Component = ROUTES[route.name];
 		return <Component route={route} navigator={navigator} {...route.passProps}/>;
 
@@ -46,16 +47,19 @@ var ROUTES = {
 	
 	render() {
 		console.log("start render");
-		var component = 'chat';
+		var component = 'login';
+		var _passProps = {};
 		if(!this.state.init)
 			return null;
-		if(!this.state.userName)
-			component = 'login';
+		if(this.state.userName){
+			component = 'chat';
+			_passProps["userName"] = this.state.userName;
+		}
 		
 		return (
 			<Navigator
 				style={ styles.container }
-				initialRoute={ {name:component } }
+				initialRoute={ {name:component, passProps:_passProps } }
 				renderScene={this.renderScene.bind(this)}
 				configureScene={ (route) => { return Navigator.SceneConfigs.FloatFromRight; } }
 			 />
