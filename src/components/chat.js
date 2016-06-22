@@ -22,11 +22,82 @@ class Chat extends Component{
 		this.state = {
 			title:'A user5 ',
 			message:'',
-			messageList:[{user:"user1", message:"Message 1"}, {user:"user1", message:"Message 1"}, {user:"user1", message:"Message 1"}, {user:"user1", message:"Message 1"}, {user:"user1", message:"Message 1"}]
+			messageList:[{user:"user1", message:"Message 1"}]
 		}
 	}
+
 	
-	render() {
+	componentWillMount() {	  
+	  console.log("componentWillMount");
+	  var message ={user:"user2", message:"Message 22"};
+	  this.setState({messageList: this.state.messageList.concat([message])});
+	  this.loadMessages();
+	}
+	
+	componentDidMount(){
+		console.log("componentDidMount");
+	}
+	
+	loadMessages() {
+		console.log("getMessages");
+		AsyncStorage.getItem("user1").then((value) => {
+        	console.log("loadMessages "+value);
+        	if(!value)
+        		return;
+        	var jsonVal = eval("(" + value + ")");
+        	var _messageList = [];
+        	for (var key in jsonVal) {
+  				_messageList.push({user:"user1", message:jsonVal[key]});
+			}
+			this.setState({messageList: this.state.messageList.concat(_messageList)});
+    	}).done();
+
+	}
+	
+	onBackPress() {
+	  console.log("onBackPress");
+      this.props.navigator.pop();
+    }
+    onSendPress() {
+    	if(!this.state.message)
+    		return;
+       console.log("onSendPress: "+this.state.message);
+       this.storeMessage(this.state.message);
+       this.insertMessage(this.state.message);
+	   this.setState({message: ''});
+    }
+
+    onCustomPress(){
+    	console.log("onCustomPress"+this.state.message);
+    }
+
+    insertMessage(message){
+    	var msg ={user:"user2", message:message};
+    	this.setState({messageList: this.state.messageList.concat([msg])});
+    }
+	
+	storeMessage(message){
+ 		var ts = new Date().getTime();
+ 		//AsyncStorage.setItem("user1", this.state.message);
+ 		let data = {};
+ 		data[ts] = message;
+ 		//var jsonData = JSON.stringify({data});
+ 		var jsonData = JSON.stringify(data);
+ 		if(message =="clear"){
+ 			AsyncStorage.removeItem('user1',()=>{});
+ 			return;
+ 		}
+ 		
+ 		AsyncStorage.mergeItem('user1', jsonData, () => {
+ 			AsyncStorage.getItem('user1', (err, result) => {
+ 				console.log("success2: "+result);
+ 				var json = eval("(" + result + ")");
+ 			});
+ 		});
+ 		
+ 	} 
+
+ 	render() {
     
 	var list = this.state.messageList.map((item, index) => {
 		return (
@@ -88,55 +159,6 @@ class Chat extends Component{
 		</View>
 	  );
 	}
-	
-	componentWillMount() {	  
-	  console.log("componentWillMount");
-	  this.getMessages();
-	}
-	
-	componentDidMount(){
-		console.log("componentDidMount");
-	}
-	
-	getMessages() {
-		console.log("getMessages");
-	}
-	
-	onBackPress() {
-	  console.log("onBackPress");
-      this.props.navigator.pop();
-    }
-    onSendPress() {
-       console.log("onSendPress: "+this.state.message);
-       this.storeMessage(this.state.message);
-       this.insertMessage(this.state.message);
-	   this.setState({message: ''});
-    }
-
-    onCustomPress(){
-    	console.log("onCustomPress"+this.state.message);
-    }
-
-    insertMessage(message){
-
-    }
-	
-	storeMessage(message){
- 		var ts = new Date().getTime();
- 		//AsyncStorage.setItem("user1", this.state.message);
- 		let data = {};
- 		data[ts] = message;
- 		//var jsonData = JSON.stringify({data});
- 		var jsonData = JSON.stringify(data);
- 		
- 		AsyncStorage.mergeItem('user1', jsonData, () => {
- 			AsyncStorage.getItem('user1', (err, result) => {
- 				console.log("success2: "+result);
- 				var json = eval("(" + result + ")");
- 			});
- 		});
- 		
- 	} 
 
 	
 }
