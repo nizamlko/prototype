@@ -7,13 +7,13 @@ import {
   TouchableHighlight,
   TextInput,
   ScrollView,
-  Dimensions,
-  AsyncStorage,
+  Dimensions,  
   StyleSheet
 } from 'react-native'; 
 
 const styles = require('./styles.chat.js');
-
+const db = require('./db/deviceStorage.js');
+const dbTest = require('./db/testDeviceStorage.js');
 var windowSize = Dimensions.get('window');
 
 class Chat extends Component{
@@ -27,9 +27,8 @@ class Chat extends Component{
 			message:'',
 			messageList:[{user:"user1", message:"Message 1"}]
 		}
-	}
+	}	
 
-	
 	componentWillMount() {	  
 	  console.log("componentWillMount");
 	  var message ={user:"user2", message:"Message 22"};
@@ -43,18 +42,16 @@ class Chat extends Component{
 	
 	loadMessages() {
 		console.log("getMessages");
-		AsyncStorage.getItem(this.userName).then((value) => {
-        	console.log("loadMessages "+value);
+		db.get(this.userName).then(value => {
+			console.log("loadMessages "+value);
         	if(!value)
-        		return;
-        	var jsonVal = eval("(" + value + ")");
+        		return;        	
         	var _messageList = [];
-        	for (var key in jsonVal) {
-  				_messageList.push({user:this.userName, message:jsonVal[key]});
+        	for (var key in value) {
+  				_messageList.push({user:this.userName, message:value[key]});
 			}
 			this.setState({messageList: this.state.messageList.concat(_messageList)});
-    	}).done();
-
+		}).done();
 	}
 	
 	onBackPress() {
@@ -62,6 +59,7 @@ class Chat extends Component{
       this.props.navigator.pop();
     }
     onSendPress() {
+    	dbTest.test();
     	if(!this.state.message)
     		return;
        console.log("onSendPress: "+this.state.message);
@@ -80,23 +78,20 @@ class Chat extends Component{
     }
 	
 	storeMessage(message){
+ 		if(message =="clear"){
+ 			db.delete(this.userName); 			
+ 			return;
+ 		}
  		var ts = new Date().getTime();
  		//AsyncStorage.setItem("user1", this.state.message);
  		let data = {};
  		data[ts] = message;
- 		//var jsonData = JSON.stringify({data});
- 		var jsonData = JSON.stringify(data);
- 		if(message =="clear"){
- 			AsyncStorage.removeItem(this.userName,()=>{});
- 			return;
- 		}
- 		
- 		AsyncStorage.mergeItem(this.userName, jsonData, () => {
- 			AsyncStorage.getItem(this.userName, (err, result) => {
- 				console.log("success2: "+result);
- 				var json = eval("(" + result + ")");
- 			});
- 		});
+
+ 		db.update(this.userName, data)
+ 		.then( () => db.get(this.userName))
+ 		.then(value => {
+ 			console.log("success2: "+value);
+ 		});		
  		
  	} 
 
