@@ -15,19 +15,36 @@ const styles = require('./styles.chat.js');
 const db = require('./db/deviceStorage.js');
 const dbTest = require('./db/testDeviceStorage.js');
 var windowSize = Dimensions.get('window');
+var Container = require('./container.js');
 
 class Chat extends Component{
 	userName:String;
-	constructor(props) {
+	constructor(props) {		
 		super(props);
 		this.userName = this.props.userName;
-		console.log("constructor : "+this.userName);
+		console.log("constructor : "+this.userName);		
+		this.messageHandler = Container.getOutgoingMessageHandler();
+		this.conversationId = "123";
 		this.state = {
 			title:this.props.userName?this.props.userName:"Unknown",
 			message:'',
 			messageList:[{user:"user1", message:"Message 1"}]
 		}
 	}	
+
+	testSomethingOnSend(){
+		//dbTest.test();
+		Container.getOutgoingMessageHandler();
+	}
+
+    _log(msg){
+    	console.log("CHAT : "+msg);
+    }
+
+	sendMessage(content){
+		this._log("sendMessage - "+content);
+		this.messageHandler.process(new TextMessage(conversationId, content));
+	}
 
 	componentWillMount() {	  
 	  console.log("componentWillMount");
@@ -59,11 +76,14 @@ class Chat extends Component{
       this.props.navigator.pop();
     }
     onSendPress() {
-    	dbTest.test();
+    	
+    	this.testSomethingOnSend();
     	if(!this.state.message)
     		return;
        console.log("onSendPress: "+this.state.message);
-       this.storeMessage(this.state.message);
+       //this.storeMessage(this.state.message);
+       this.sendMessage(this.state.message);
+       //TODO this should be after processing task
        this.insertMessage(this.state.message);
 	   this.setState({message: ''});
     }
