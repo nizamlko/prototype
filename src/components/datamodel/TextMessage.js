@@ -1,5 +1,7 @@
 'use strict';
 const Message = require('./Message.js');
+const MessageType = require('./MessageType.js');
+
 class TextMessage extends Message{
     /*
     	@conversationId:String
@@ -11,7 +13,7 @@ class TextMessage extends Message{
 	}
 
 	//@return String
-	getContent(){ return this.content;}
-	
-
+	getContent(){ return this.content;}	
 }
+
+module.exports = TextMessage;

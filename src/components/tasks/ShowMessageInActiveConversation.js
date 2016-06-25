@@ -1,5 +1,5 @@
 'use strict';
-
+const ATask = require('./ATask.js');
 
 class ShowMessageInActiveConversation extends ATask{
     constructor() {
@@ -23,3 +23,5 @@ class ShowMessageInActiveConversation extends ATask{
 
 ShowMessageInActiveConversation.LOG_TAG = "ShowMessageInActiveConversation";
 ShowMessageInActiveConversation.CLASS = "ShowMessageInActiveConversation";
+
+module.exports = ShowMessageInActiveConversation;

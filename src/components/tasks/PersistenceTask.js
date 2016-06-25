@@ -1,5 +1,5 @@
 'use strict';
-
+const ATask = require('./ATask.js');
 
 class PersistenceTask extends ATask{
 	constructor() {
@@ -23,3 +23,5 @@ class PersistenceTask extends ATask{
 
 PersistenceTask.LOG_TAG = "PersistenceTask";
 PersistenceTask.CLASS = "PersistenceTask";
+
+module.exports = PersistenceTask;

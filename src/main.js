@@ -5,8 +5,8 @@ import {
   AsyncStorage
 } from 'react-native';
  
-var Chat = require('./components/chat');
-var Login = require('./components/login');
+var Chat = require('components/chat');
+var Login = require('components/login');
  
 var ROUTES = {
 	login: Login,

@@ -2,23 +2,22 @@
 class MessageHandler{
 	constructor() {
 		this.startingTask =null;
-		initTaskList();
+		this.initTaskList();
 	}
-
 
 	initTaskList(){
     	if(this instanceof MessageHandler)
     		throw new TypeError("initTaskList is abstract method");
     }
 
-    process(String jsonString) {
+    process(jsonString) {
         if (TextUtils.isEmpty(jsonString)) return;
 
         process(deserializer.deserialize(jsonString));
     }
 
     //message @Message or String
-    process(Message messageIn) {
+    process(messageIn) {
     	var message;
 
     	//TODO handle deserialization
@@ -31,7 +30,7 @@ class MessageHandler{
         if (message == null) 
         	return;        
 
-        startingTask.execute(message);
+        this.startingTask.execute(message);
     }
 
 }

@@ -1,6 +1,13 @@
 'use strict';
-class OutgoingMessageHandler{
+const SubmitOutgoingMessageTask = require('components/tasks/SubmitOutgoingMessageTask.js');
+const MessageHandler = require('./MessageHandler.js');
+const PersistenceTask = require('./PersistenceTask.js');
+const ShowMessageInActiveConversation = require('./ShowMessageInActiveConversation.js');
+
+
+class OutgoingMessageHandler extends MessageHandler{
 	constructor() {
+		super();
 		this.startingTask;
 		console.log("OutgoingMessageHandler is getting created");
 	}
@@ -12,10 +19,10 @@ class OutgoingMessageHandler{
 	// @return void
 	//TODO include LiveMessageCorrelationTask and PersistenceTask
     initTaskList() {
-        startingTask = new PersistenceTask();
-        startingTask
+        this.startingTask = new PersistenceTask();
+        this.startingTask
                 .followedBy(new SubmitOutgoingMessageTask())                
-                .followedBy(new ShowMessageInActiveConversation(context));
+                .followedBy(new ShowMessageInActiveConversation());
     }
 }
 

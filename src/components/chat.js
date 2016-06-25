@@ -13,28 +13,28 @@ import {
 
 const styles = require('./styles.chat.js');
 const db = require('./db/deviceStorage.js');
-const dbTest = require('./db/testDeviceStorage.js');
 var windowSize = Dimensions.get('window');
 var Container = require('./container.js');
+const randomTest = require('./test/TestRandom.js');
+const TextMessage = require('components/datamodel/TextMessage.js');
 
 class Chat extends Component{
 	userName:String;
 	constructor(props) {		
 		super(props);
 		this.userName = this.props.userName;
-		console.log("constructor : "+this.userName);		
+		console.log("Chat constructor : "+this.userName);		
 		this.messageHandler = Container.getOutgoingMessageHandler();
 		this.conversationId = "123";
-		this.state = {
-			title:this.props.userName?this.props.userName:"Unknown",
+		this.title = this.props.userName?this.props.userName:"Unknown",
+		this.state = {			
 			message:'',
 			messageList:[{user:"user1", message:"Message 1"}]
 		}
 	}	
 
-	testSomethingOnSend(){
-		//dbTest.test();
-		Container.getOutgoingMessageHandler();
+	async testSomethingOnSend(){
+		//randomTest.test();
 	}
 
     _log(msg){
@@ -42,8 +42,11 @@ class Chat extends Component{
     }
 
 	sendMessage(content){
+		if(!content)
+			return;
+
 		this._log("sendMessage - "+content);
-		this.messageHandler.process(new TextMessage(conversationId, content));
+		this.messageHandler.process(new TextMessage(this.conversationId, content));
 	}
 
 	componentWillMount() {	  
@@ -116,7 +119,7 @@ class Chat extends Component{
  	} 
 
  	render() {
-    console.log("render passprops "+this.props);
+    console.log("chat.render passprops "+this.props);
 	var list = this.state.messageList.map((item, index) => {
 		return (
 		  <View
@@ -139,7 +142,7 @@ class Chat extends Component{
 			  onPress={this.onBackPress.bind(this)}
 			  style={{marginLeft: 15}}
 			  >
-			  <Text style={{color: '#fff'}}>{this.state.title}</Text>
+			  <Text style={{color: '#fff'}}>{this.title}</Text>
 			</TouchableHighlight>
 		  </View>
 		  <View style={styles.chatContainer}>

@@ -50,3 +50,4 @@ class ATask{
 
 ATask.LOG_TAG = "Task";
 ATask.CLASS = "ATask";
+module.exports = ATask;

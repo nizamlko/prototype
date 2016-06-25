@@ -1,5 +1,5 @@
 'use strict';
-
+const ATask = require('./ATask.js');
 
 class SubmitOutgoingMessageTask extends ATask{
 	constructor() {
@@ -23,3 +23,4 @@ class SubmitOutgoingMessageTask extends ATask{
 
 SubmitOutgoingMessageTask.LOG_TAG = "SubmitOutgoingMessageTask";
 SubmitOutgoingMessageTask.CLASS = "SubmitOutgoingMessageTask";
+module.exports = SubmitOutgoingMessageTask;

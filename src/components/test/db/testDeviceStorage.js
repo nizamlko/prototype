@@ -1,6 +1,6 @@
 'use strict';
 
-const db = require('./deviceStorage.js');
+const db = require('components/db/deviceStorage.js');
 
 const TestDeviceStorage = {	
 	test(){
