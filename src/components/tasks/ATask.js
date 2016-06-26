@@ -1,5 +1,5 @@
 'use strict';
-
+const LOG = require('components/log/logger.js');
 
 class ATask{
 	constructor() {
@@ -11,10 +11,10 @@ class ATask{
 
 	//@message:Message
 	execute(message) {
-		this._log(this.getClass()+ " is processing message");
+		LOG.d(ATask.LOG_TAG, this.getClass()+ " is processing message")		
 		var shouldContinue = this.process(message);
 		if(shouldContinue && this.nextTask)
-			nextTask.execute(message);
+			this.nextTask.execute(message);
 	}
 
 	/**
@@ -34,14 +34,7 @@ class ATask{
         this.nextTask = nextTask;
         return nextTask;
     }
-
-	_log(tag, msg){
-		console.log(tag+" : "+msg);
-	}
-	_log(msg){
-		console.log(ATask.LOG_TAG+" : "+msg);	
-	}
-
+    
 	getClass(){
 		return ATaskCLASS;
 	}

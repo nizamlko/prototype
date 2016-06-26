@@ -4,6 +4,7 @@ var KMessageQueue = require('./queue/KMessageQueue.js');
 
 class Container{
 	static getOutgoingMessageHandler(){
+		console.log("Container.getOutgoingMessageHandler Container.messageHandler==null ? "+(Container.messageHandler==null));
 		if(Container.messageHandler==null)
 			Container.messageHandler = new OutgoingMessageHandler(); 
 		return Container.messageHandler;

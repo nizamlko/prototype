@@ -1,15 +1,14 @@
 'use strict';
+const LOG = require('components/log/logger.js');
 const SubmitOutgoingMessageTask = require('components/tasks/SubmitOutgoingMessageTask.js');
 const MessageHandler = require('./MessageHandler.js');
 const PersistenceTask = require('./PersistenceTask.js');
 const ShowMessageInActiveConversation = require('./ShowMessageInActiveConversation.js');
 
-
 class OutgoingMessageHandler extends MessageHandler{
 	constructor() {
-		super();
-		this.startingTask;
-		console.log("OutgoingMessageHandler is getting created");
+		super();		
+		LOG.v("OutgoingMessageHandler is getting created");
 	}
 	fun(){
 		console.log("fun in OutgoingMessageHandler");
@@ -19,6 +18,7 @@ class OutgoingMessageHandler extends MessageHandler{
 	// @return void
 	//TODO include LiveMessageCorrelationTask and PersistenceTask
     initTaskList() {
+    	LOG.v("OutgoingMessageHandler.initTaskList");
         this.startingTask = new PersistenceTask();
         this.startingTask
                 .followedBy(new SubmitOutgoingMessageTask())                
