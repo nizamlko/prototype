@@ -1,7 +1,7 @@
 'use strict';
 var OutgoingMessageHandler = require('./tasks/OutgoingMessageHandler.js');
 var KMessageQueue = require('./queue/KMessageQueue.js');
-
+const ViewFactory = require('components/view/ViewFactory.js');
 class Container{
 	static getOutgoingMessageHandler(){
 		console.log("Container.getOutgoingMessageHandler Container.messageHandler==null ? "+(Container.messageHandler==null));

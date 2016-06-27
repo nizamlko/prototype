@@ -18,7 +18,7 @@ class OutgoingMessageHandler extends MessageHandler{
 	// @return void
 	//TODO include LiveMessageCorrelationTask and PersistenceTask
     initTaskList() {
-    	LOG.v("OutgoingMessageHandler.initTaskList");
+    	LOG.v("OutgoingMessageHandler", "OutgoingMessageHandler.initTaskList");
         this.startingTask = new PersistenceTask();
         this.startingTask
                 .followedBy(new SubmitOutgoingMessageTask())                

@@ -1,12 +1,20 @@
 'use strict';
+const LOG = require('components/log/logger.js');
+const Container = require('components/container.js');
 const ATask = require('./ATask.js');
-var Container = require('components/container.js');
+const ViewFactory = require('components/view/ViewFactory.js');
+
 
 class ShowMessageInActiveConversation extends ATask{
     constructor() {
         super();
-        //viewFactory:ViewFactory
-        //this.viewFactory = Container.getOutgoingMessageHandler();
+        LOG.v("ShowMessageInActiveConversation", "constructor");        
+        //viewFactory:ViewFactory 
+        this.viewFactory = ViewFactory.getViewFactory();
+
+        //TODO No idea why Container.getViewFactory is not working
+        //this.viewFactory = Container.getViewFactory();
+
     }
     
     /**
@@ -14,7 +22,20 @@ class ShowMessageInActiveConversation extends ATask{
     * @return whether next task should continue.
     */
     process(message){
-        console.log("processing in " + this.getClass());
+        console.log("processing in " + this.getClass());        
+        var messageType = message.getType();
+        var messageSubType = message.getSubType();
+
+        if (message.isVisibleInChatView() && this.viewFactory.isViewDefinedFor(messageType, messageSubType)) {
+            LOG.v("ShowMessageInActiveConversation", "showMessage in activeConversation");
+            return;
+            activeConversation.showMessage(message);
+            if (activeRelevanceView != null) {
+                activeRelevanceView.showMessage(message);
+            }
+        }
+
+
         return true;
     }
 
