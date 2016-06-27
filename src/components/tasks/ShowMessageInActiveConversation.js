@@ -1,6 +1,7 @@
 'use strict';
 const LOG = require('components/log/logger.js');
-const Container = require('components/container.js');
+//TODO explore-> I have no idea why getActiveConversation is not visible here when declared in container.js 
+const Container2 = require('./../container2.js');
 const ATask = require('./ATask.js');
 const ViewFactory = require('components/view/ViewFactory.js');
 
@@ -25,13 +26,12 @@ class ShowMessageInActiveConversation extends ATask{
         console.log("processing in " + this.getClass());        
         var messageType = message.getType();
         var messageSubType = message.getSubType();
+        var activeConversation = Container2.getActiveConversation();
 
         if (message.isVisibleInChatView() && this.viewFactory.isViewDefinedFor(messageType, messageSubType)) {
             LOG.v("ShowMessageInActiveConversation", "showMessage in activeConversation");
-            return;
-            activeConversation.showMessage(message);
-            if (activeRelevanceView != null) {
-                activeRelevanceView.showMessage(message);
+            if(activeConversation != null){
+                activeConversation.showMessage(message);    
             }
         }
 

@@ -7,7 +7,7 @@ class Message{
     	@subType:String
     */
 	constructor(conversationId, type, subType, isPersistent, isReliable, isSentAckNeeded, isVisibleInChatView) {
-		this.startingTask =null;
+		this.conversationId =conversationId;
 		this.type = type;
 		this.subType = subType? subType:null;
 		this.isPersistent = (isPersistent==false)?false:true;
@@ -27,6 +27,10 @@ class Message{
 
 	isVisibleInChatView(){
 		return this.visibleInChatView;
+	}
+
+	getConversationId(){
+		return this.conversationId;
 	}
 
 

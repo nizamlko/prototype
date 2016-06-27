@@ -3,6 +3,7 @@ var OutgoingMessageHandler = require('./tasks/OutgoingMessageHandler.js');
 var KMessageQueue = require('./queue/KMessageQueue.js');
 const ViewFactory = require('components/view/ViewFactory.js');
 class Container{
+	constructor() {}
 	static getOutgoingMessageHandler(){
 		console.log("Container.getOutgoingMessageHandler Container.messageHandler==null ? "+(Container.messageHandler==null));
 		if(Container.messageHandler==null)
@@ -22,6 +23,16 @@ class Container{
 			Container.viewFactory = new ViewFactory(); 
 		return Container.viewFactory;
 	}
+
+
+	static setActiveConversation(activeConversation) {
+        this.activeConversation = activeConversation;
+    }
+
+    static getActiveConversation(){
+    	return this.activeConversation;
+    }   
+    fun(){}
 }
 
 Container.messageHandler=null;

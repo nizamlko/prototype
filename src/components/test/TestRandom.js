@@ -1,17 +1,29 @@
 const dbTest = require('./db/testDeviceStorage.js');
 var Container = require('./../container.js');
+var B = require('components/test/B.js');
+var C = require('components/test/C.js');
+var A = require('components/test/a/A.js');
+
 
 const TestRandom = {
 	test(){
 		console.log("--------Test start");
-		this.testDeviceStorage();
+		//this.testDeviceStorage();
 		//Container.getOutgoingMessageHandler();		
 		//this.testAsyncWrapper();
+		this.testStaticFun();
 		console.log("--------Test End");
 	},
 
 	testDeviceStorage(){
 		dbTest.test();
+	},
+
+	testStaticFun(){		
+		A.fun1();		
+		var c = new C();
+		C.fun1();
+		c.fun2();
 	},
 
 	async testAsyncWrapper(){

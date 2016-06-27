@@ -11,34 +11,49 @@ import {
   StyleSheet
 } from 'react-native'; 
 
+const LOG = require('components/log/logger.js');
 const styles = require('./styles.chat.js');
 const db = require('./db/deviceStorage.js');
 var windowSize = Dimensions.get('window');
 var Container = require('./container.js');
+var Container2 = require('./container2.js');
 const randomTest = require('./test/TestRandom.js');
 const TextMessage = require('components/datamodel/TextMessage.js');
+const Message = require('components/ui/Message.js');
 
 class Chat extends Component{
 	userName:String;
 	constructor(props) {		
 		super(props);
+		this.state = {	
+			message:'',
+			messageList:[{user:"user1", message:"Message 1"}]
+		}
+
 		this.userName = this.props.userName;
 		console.log("Chat constructor : "+this.userName);		
 		this.messageHandler = Container.getOutgoingMessageHandler();
 		this.conversationId = "123";
 		this.title = this.props.userName?this.props.userName:"Unknown",
-		this.state = {			
-			message:'',
-			messageList:[{user:"user1", message:"Message 1"}]
-		}
+		Container2.setActiveConversation(this);
+		
 	}	
 
 	async testSomethingOnSend(){
-		//randomTest.test();
+		randomTest.test();
 	}
 
     _log(msg){
     	console.log("CHAT : "+msg);
+    }
+
+    // message:Message
+    showMessage(message){
+    	LOG.v("CHAT", message);
+    	if(!(this.conversationId == message.getConversationId()))
+    		return;
+    	LOG.v("CHAT", message2);
+    	
     }
 
 	sendMessage(content){
@@ -84,7 +99,7 @@ class Chat extends Component{
     	if(!this.state.message)
     		return;
        console.log("onSendPress: "+this.state.message);
-       //this.storeMessage(this.state.message);
+       this.storeMessage(this.state.message);
        this.sendMessage(this.state.message);
        //TODO this should be after processing task
        this.insertMessage(this.state.message);

@@ -1,5 +1,6 @@
 'use strict';
 const LOG = require('components/log/logger.js');
+const Container = require('./../container.js');
 
 class ATask{
 	constructor() {
