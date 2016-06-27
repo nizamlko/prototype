@@ -10,34 +10,20 @@ const LOGLEVEL ={
 };
 const LOGGINGLEVEL = LOGLEVEL.VERBOSE;
 
-const log = {
-	v(msg){
-		this.v(null, msg);
-	},
+const log = {	
 	v(tag, msg){
 		this._log(LOGLEVEL.VERBOSE, tag, msg);
-	},
-	d(msg){
-		this.d(null, msg);
-	},
+	},	
 	d(tag, msg){
 		this._log(LOGLEVEL.DEBUG, tag, msg);
-	},
-	i(msg){
-		this.i(null, msg);
-	},
+	},	
 	i(tag, msg){
 		this._log(LOGLEVEL.INFO, tag, msg);
-	},	
-	w(msg){
-		this.w(null, msg);
-	},
+	},		
 	w(tag, msg){
 		this._log(LOGLEVEL.WARN, tag, msg);
 	},
-	e(msg){
-		this.e(null, msg);
-	},
+	
 	e(tag, msg){
 		this._log(LOGLEVEL.ERROR, tag, msg);
 	},

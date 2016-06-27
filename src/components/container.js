@@ -16,9 +16,16 @@ class Container{
 			Container.KMessageQueue = new KMessageQueue(); 
 		return Container.KMessageQueue;
 	}
+
+	static getViewFactory(){
+		if(Container.viewFactory==null)
+			Container.viewFactory = new ViewFactory(); 
+		return Container.viewFactory;
+	}
 }
 
 Container.messageHandler=null;
 Container.KMessageQueue=null;
+Container.viewFactory=null;
 
 module.exports = Container;
