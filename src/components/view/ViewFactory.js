@@ -11,7 +11,7 @@ class ViewFactory{
     }
 
     static getViewFactory(){
-    	console.log("ViewFactory", "getViewFactory");
+    	LOG.v("ViewFactory", "getViewFactory");
     	return ViewFactory.INSTANCE;
     }
     
