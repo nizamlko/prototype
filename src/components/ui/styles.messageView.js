@@ -21,7 +21,8 @@ var styles = StyleSheet.create({
 	    backgroundColor: '#ffffff'
 	  },
 
-	  input: {
+	  text: {
+	  	textDecorationLine:'none',
 	    width: 250,	    
 	    padding: 5,
 	    height: 30,	    
