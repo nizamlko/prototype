@@ -6,8 +6,9 @@ import {
 } from 'react-native'; 
 
 const styles = require('./styles.message.js');
-class Message extends Component{	 
+class MessageView extends Component{
 	render() {
+		console.log("MEssageView-----------");
 		return (
 		  <View
 			style={styles.messageContainer}
@@ -19,5 +20,21 @@ class Message extends Component{
 			</Text>
 		  </View>
 		);		
-	}		
+	}
+
+	static getView(index, message) {
+		console.log("getView-----------");
+		return (
+		  <View			
+			key={index}
+			>
+			<Text>
+			  {message.getUserName()}
+			  <Text> : {message.getContent()}</Text>
+			</Text>
+		  </View>
+		);		
+	}				
 }
+
+module.exports = MessageView;

@@ -5,12 +5,12 @@ import {
   AsyncStorage
 } from 'react-native';
  
-var Chat = require('components/chat');
+var Chat2 = require('components/chat');
 var Login = require('components/login');
  
 var ROUTES = {
 	login: Login,
-  	chat: Chat
+  	chat: Chat2
 };
  
 
@@ -40,7 +40,7 @@ var ROUTES = {
 
 	renderScene(route, navigator) {
 		console.log(route.passProps);
-		var Component = ROUTES[route.name];
+		var Component = ROUTES[route.name];		
 		return <Component route={route} navigator={navigator} {...route.passProps}/>;
 
 	}
@@ -52,7 +52,7 @@ var ROUTES = {
 		if(!this.state.init)
 			return null;
 		if(this.state.userName){
-			component = 'chat';
+			component = 'chat';			
 			_passProps["userName"] = this.state.userName;
 		}
 		

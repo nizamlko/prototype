@@ -2,13 +2,14 @@
 const LOG = require('components/log/logger.js');
 const ViewLayouts = require('components/view/ViewLayouts');
 const MessageType = require('components/datamodel/MessageType.js');
-const Message = require('components/ui/Message.js');
+const MessageView = require('components/ui/MessageView.js');
 
 class ViewFactory{
-	constructor() {       
+
+	constructor() {
         LOG.v("ViewFactory", "constructor");
         this.viewLayouts = new ViewLayouts();
-        this.viewLayouts.add(MessageType.TEXT_MESSAGE, Message);
+        this.viewLayouts.add(MessageType.TEXT_MESSAGE, MessageView);
     }
 
     static getViewFactory(){
@@ -21,6 +22,22 @@ class ViewFactory{
     */
     isViewDefinedFor(messageType, subMessageType){
     	return this.viewLayouts.isLayoutDefinedFor(messageType, subMessageType);
+
+    }
+
+    getView(index, message){
+        var messageType = message.getType();
+        var subMessageType = message.getSubType();
+        LOG.d("ViewFactory", "getView messageType = "+messageType);
+        if(!this.isViewDefinedFor()){
+            LOG.d("No view defined for message type: " + messageType);
+            //throw new TypeError("No view defined for message type: " + messageType); //WTH
+        }
+
+        //TODO make it generic
+        var messageLayOut = this.viewLayouts.getLayout(messageType);
+        return messageLayOut.getView(index, message);
+        //return (<messageLayOut user={message.getUserName()} message = {message.getContent()}/>);
 
     }
 }

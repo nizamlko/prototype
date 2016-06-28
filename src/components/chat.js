@@ -17,10 +17,10 @@ const db = require('./db/deviceStorage.js');
 var windowSize = Dimensions.get('window');
 var Container = require('./container.js');
 var Container2 = require('./container2.js');
-const randomTest = require('./test/TestRandom.js');
 const TextMessage = require('components/datamodel/TextMessage.js');
-const Message = require('components/ui/Message.js');
+const MessageView = require('components/ui/MessageView.js');
 const ViewFactory = require('components/view/ViewFactory.js');
+const randomTest = require('./test/TestRandom.js');
 
 class Chat extends Component{
 	userName:String;
@@ -145,6 +145,19 @@ class Chat extends Component{
  	render() {
     console.log("chat.render passprops "+this.props);
 	var list = this.state.messageList.map((message, index) => {
+		//view2= viewFactory.getView(message, convertView, parent, senderChanged, forceRefresh, searchResults.containsKey(message.getId()) ? finalSearchResultOffset : null);
+		var view = this.viewFactory.getView(index, message);
+		return view;
+		//WTH
+		//return (<MessageView key={index} user="user1" message = "message1"/>);
+		/*
+		return(
+				<View key={index}/>
+				//<MessageView key={index} user="user1" message = "message1"/>
+				//<MessageView key={index} user={message.getUserName()} message = {message.getContent()}/>
+			);
+		*/
+		/*
 		return (
 		  <View
 			style={styles.messageContainer}
@@ -156,6 +169,7 @@ class Chat extends Component{
 			</Text>
 		  </View>
 		);
+		*/
 	  });
  
 	  return (
