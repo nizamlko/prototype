@@ -26,8 +26,10 @@ class Login extends Component {
 
   createUser(userName){
     AsyncStorage.setItem('userName', userName, () => {
-      console.log('userName '+userName+" created");
-        this.props.navigator.push({ name: 'chat' });    
+       console.log('userName '+userName+" created");
+        this.props.navigator.push({ name: 'chat', 
+                                    passProps:{userName:userName}
+                                     });    
     });
   }
 	render() {

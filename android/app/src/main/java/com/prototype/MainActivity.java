@@ -1,6 +1,8 @@
 package com.prototype;
 
+import com.facebook.react.LifecycleState;
 import com.facebook.react.ReactActivity;
+import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 
@@ -17,7 +19,27 @@ public class MainActivity extends ReactActivity {
     protected String getMainComponentName() {
         return "prototype";
     }
+    private LifecycleState mLifecycleState = LifecycleState.BEFORE_RESUME;
+    protected  ReactInstanceManager createReactInstanceManager() {
+        ReactInstanceManager.Builder builder = ReactInstanceManager.builder()
+                .setApplication(getApplication())
+                .setJSMainModuleName(getJSMainModuleName())
+                .setInitialLifecycleState(mLifecycleState);
 
+        for (ReactPackage reactPackage : getPackages()) {
+            builder.addPackage(reactPackage);
+        }
+
+        String jsBundleFile = getJSBundleFile();
+
+        if (jsBundleFile != null) {
+            builder.setJSBundleFile(jsBundleFile);
+        } else {
+            builder.setBundleAssetName(getBundleAssetName());
+        }
+
+        return builder.build();
+    }
     /**
      * Returns whether dev mode should be enabled.
      * This enables e.g. the dev menu.
