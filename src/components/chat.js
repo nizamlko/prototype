@@ -42,7 +42,12 @@ class Chat extends Component{
 	}	
 
 	async testSomethingOnSend(){
-		randomTest.test();
+		randomTest.test(this.userName);
+	}
+
+	checkForPopulateDummyData(message){
+		if(message == "populate")
+			randomTest.populateChats(this.userName, 5000);
 	}
 
     _log(msg){
@@ -112,35 +117,15 @@ class Chat extends Component{
     	if(!this.state.message)
     		return;
        console.log("onSendPress: "+this.state.message);
-       this.storeMessage(this.state.message);
-       this.sendMessage(this.state.message);
-       //TODO this should be after processing task
-       //this.insertMessage(this.state.message);
+       this.checkForPopulateDummyData(this.state.message);
+       //this.storeMessage(this.state.message);
+       this.sendMessage(this.state.message);       
 	   this.setState({message: ''});
     }
 
     onCustomPress(){
     	console.log("onCustomPress"+this.state.message);
     }
-
-
-	storeMessage(message){
- 		if(message =="clear"){
- 			db.delete(this.userName); 			
- 			return;
- 		}
- 		var ts = new Date().getTime();
- 		//AsyncStorage.setItem("user1", this.state.message);
- 		let data = {};
- 		data[ts] = message;
-
- 		db.update(this.userName, data)
- 		.then( () => db.get(this.userName))
- 		.then(value => {
- 			console.log("success2: "+value);
- 		});		
- 		
- 	} 
 
  	render() {
     console.log("chat.render passprops "+this.props);

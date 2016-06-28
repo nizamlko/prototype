@@ -29,7 +29,7 @@ class ViewFactory{
         var messageType = message.getType();
         var subMessageType = message.getSubType();
         LOG.d("ViewFactory", "getView messageType = "+messageType);
-        if(!this.isViewDefinedFor()){
+        if(!this.isViewDefinedFor(messageType, subMessageType)){
             LOG.d("No view defined for message type: " + messageType);
             //throw new TypeError("No view defined for message type: " + messageType); //WTH
         }

@@ -1,6 +1,7 @@
 'use strict';
+const LOG = require('components/log/logger.js');
 const ATask = require('./ATask.js');
-
+const MessageBO = require('components/storage/MessageBO.js');
 class PersistenceTask extends ATask{
 	constructor() {
    		super();    	
@@ -12,8 +13,10 @@ class PersistenceTask extends ATask{
     */
     process(message){
     	console.log("processing in " + this.getClass());
-    	return true;
-    }
+    	MessageBO.getInstance().addNew(message);
+        return true;
+    }   
+    
 
 	getClass(){
 		return PersistenceTask.CLASS;

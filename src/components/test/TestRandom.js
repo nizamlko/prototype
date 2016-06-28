@@ -1,22 +1,40 @@
 const dbTest = require('./db/testDeviceStorage.js');
-var Container = require('./../container.js');
+const Container = require('./../container.js');
+const db = require('components/db/deviceStorage.js');
+
 var B = require('components/test/B.js');
 var C = require('components/test/C.js');
 var A = require('components/test/a/A.js');
 
 
 const TestRandom = {
-	test(){
-		console.log("--------Test start");
+	test(userName){
+		console.log("--------Test start userName = "+userName);
 		//this.testDeviceStorage();
 		//Container.getOutgoingMessageHandler();		
 		//this.testAsyncWrapper();
-		this.testStaticFun();
+		//this.populateChats(userName);
 		console.log("--------Test End");
 	},
 
 	testDeviceStorage(){
 		dbTest.test();
+	},
+
+	populateChats(userName, num){
+		console.log("TestRandom userName = "+userName+", num= "+num);
+		for(var i=0; i<num; i++){
+			var ts = i+ new Date().getTime();
+ 			//AsyncStorage.setItem("user1", this.state.message);
+ 			let data = {};
+ 			data[ts+i] = "Dummy Data "+i;
+ 			db.update(userName, data)
+		 		.then( () => db.get(userName))
+		 		.then(value => {
+		 			console.log("success2: "+userName+", value ="+value);
+		 		});	
+		}
+			
 	},
 
 	testStaticFun(){		
