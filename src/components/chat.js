@@ -20,23 +20,25 @@ var Container2 = require('./container2.js');
 const randomTest = require('./test/TestRandom.js');
 const TextMessage = require('components/datamodel/TextMessage.js');
 const Message = require('components/ui/Message.js');
+const ViewFactory = require('components/view/ViewFactory.js');
 
 class Chat extends Component{
 	userName:String;
 	constructor(props) {		
 		super(props);
 		this.state = {	
-			message:'',
-			messageList:[{user:"user1", message:"Message 1"}]
+			message:'',			
+			messageList:[new TextMessage(this.conversationId, "user1", "message1")]
+			
 		}
 
 		this.userName = this.props.userName;
-		console.log("Chat constructor : "+this.userName);		
+		LOG.v("Chat constructor : "+this.userName);		
 		this.messageHandler = Container.getOutgoingMessageHandler();
 		this.conversationId = "123";
 		this.title = this.props.userName?this.props.userName:"Unknown",
 		Container2.setActiveConversation(this);
-		
+		this.viewFactory = ViewFactory.getViewFactory();
 	}	
 
 	async testSomethingOnSend(){
@@ -44,16 +46,25 @@ class Chat extends Component{
 	}
 
     _log(msg){
-    	console.log("CHAT : "+msg);
+    	LOG.d("CHAT : "+msg);
     }
+	
+	insertMessage(message, insertIfAbsent, insertAtFront){
+    	LOG.v("CHAT", "insertMessage ->");
+    	if(insertIfAbsent && this.state.messageList.indexOf(message)>-1)
+    		return;
+    	this.setState({messageList: this.state.messageList.concat([message])});
+    }
+	
 
     // message:Message
     showMessage(message){
     	LOG.v("CHAT", message);
     	if(!(this.conversationId == message.getConversationId()))
     		return;
-    	LOG.v("CHAT", message2);
-    	
+    	this.insertMessage(message, false, false);
+    	LOG.v("CHAT", "message2");
+
     }
 
 	sendMessage(content){
@@ -61,12 +72,13 @@ class Chat extends Component{
 			return;
 
 		this._log("sendMessage - "+content);
-		this.messageHandler.process(new TextMessage(this.conversationId, content));
+		this.messageHandler.process(new TextMessage(this.conversationId, this.userName, content));
 	}
 
 	componentWillMount() {	  
 	  console.log("componentWillMount");
-	  var message ={user:"user2", message:"Message 22"};
+	  //var message ={user:"user2", message:"Message 22"};
+	  var message = new TextMessage(this.conversationId, "user2", "message2");
 	  this.setState({messageList: this.state.messageList.concat([message])});
 	  this.loadMessages();
 	}
@@ -83,7 +95,8 @@ class Chat extends Component{
         		return;        	
         	var _messageList = [];
         	for (var key in value) {
-  				_messageList.push({user:this.userName, message:value[key]});
+  				//_messageList.push({user:this.userName, message:value[key]});
+  				_messageList.push(new TextMessage(this.conversationId, this.userName, value[key]));
 			}
 			this.setState({messageList: this.state.messageList.concat(_messageList)});
 		}).done();
@@ -102,7 +115,7 @@ class Chat extends Component{
        this.storeMessage(this.state.message);
        this.sendMessage(this.state.message);
        //TODO this should be after processing task
-       this.insertMessage(this.state.message);
+       //this.insertMessage(this.state.message);
 	   this.setState({message: ''});
     }
 
@@ -110,11 +123,7 @@ class Chat extends Component{
     	console.log("onCustomPress"+this.state.message);
     }
 
-    insertMessage(message){
-    	var msg ={user:this.userName, message:message};
-    	this.setState({messageList: this.state.messageList.concat([msg])});
-    }
-	
+
 	storeMessage(message){
  		if(message =="clear"){
  			db.delete(this.userName); 			
@@ -135,15 +144,15 @@ class Chat extends Component{
 
  	render() {
     console.log("chat.render passprops "+this.props);
-	var list = this.state.messageList.map((item, index) => {
+	var list = this.state.messageList.map((message, index) => {
 		return (
 		  <View
 			style={styles.messageContainer}
 			key={index}
 			>
 			<Text style={this.nameLabel}>
-			  {item.user}
-			  <Text style={styles.messageLabel}> : {item.message}</Text>
+			  {message.getUserName()}
+			  <Text style={styles.messageLabel}> : {message.getContent()}</Text>
 			</Text>
 		  </View>
 		);

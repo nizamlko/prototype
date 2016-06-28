@@ -6,15 +6,15 @@ class Message{
     	@type:String
     	@subType:String
     */
-	constructor(conversationId, type, subType, isPersistent, isReliable, isSentAckNeeded, isVisibleInChatView) {
+	constructor(conversationId, userName, type, subType, isPersistent, isReliable, isSentAckNeeded, isVisibleInChatView) {
 		this.conversationId =conversationId;
+		this.userName = userName;
 		this.type = type;
 		this.subType = subType? subType:null;
 		this.isPersistent = (isPersistent==false)?false:true;
 		this.isReliable = (isReliable==false)?false:true;
 		this.isSentAckNeeded =  (isSentAckNeeded==false)?false:true;
 		this.visibleInChatView = (isVisibleInChatView==false)?false:true;
-
 	}
 
 	getType(){
@@ -31,6 +31,9 @@ class Message{
 
 	getConversationId(){
 		return this.conversationId;
+	}
+	getUserName(){
+		return this.userName;
 	}
 
 

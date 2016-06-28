@@ -7,8 +7,8 @@ class TextMessage extends Message{
     	@conversationId:String
     	@content:String
     */
-	constructor(conversationId, content) {
-		super(conversationId, MessageType.TEXT_MESSAGE);
+	constructor(conversationId, userName, content) {
+		super(conversationId, userName, MessageType.TEXT_MESSAGE);
 		 this.content = content;
 	}
 
