@@ -4,9 +4,10 @@ const Container = require('./../container.js');
 
 class ATask{
 	constructor() {
+        /*
    		if (new.target === ATask) {
       			throw new TypeError("ATask is abstract class");
-    	}
+    	}*/
     	this.nextTask; // :ATask
     }
 
