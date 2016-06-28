@@ -24,6 +24,7 @@ public class MainActivity extends ReactActivity {
         ReactInstanceManager.Builder builder = ReactInstanceManager.builder()
                 .setApplication(getApplication())
                 .setJSMainModuleName(getJSMainModuleName())
+                .setUseDeveloperSupport(getUseDeveloperSupport())
                 .setInitialLifecycleState(mLifecycleState);
 
         for (ReactPackage reactPackage : getPackages()) {

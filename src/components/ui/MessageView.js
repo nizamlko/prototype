@@ -2,10 +2,11 @@
 import React, { Component } from 'react';
 import {
   View,
+  TextInput,
   Text
 } from 'react-native'; 
 
-const styles = require('./styles.message.js');
+const styles = require('./styles.messageView.js');
 class MessageView extends Component{
 	render() {
 		console.log("MEssageView-----------");
@@ -22,7 +23,26 @@ class MessageView extends Component{
 		);		
 	}
 
-	static getView(index, message) {
+	static getView(index, message){
+		return(
+			<View key = {index}	style={styles.view}>
+				<TextInput   style={styles.input}
+        	    	value={message.getUserName()}
+            		maxLength={12}
+            		multiline={false}
+            	/>
+            	<TextInput  style={styles.input}  	        	
+        	    	value={message.getContent()}
+            		maxLength={12}
+            		multiline={false}
+            	/>
+        	</View>
+ 
+		);
+	}
+
+
+	static getView2(index, message) {
 		console.log("getView-----------");
 		return (
 		  <View			
