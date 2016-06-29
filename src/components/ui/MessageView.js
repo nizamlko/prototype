@@ -40,17 +40,18 @@ class MessageView extends Component{
 
 
 	static getView2(index, message) {
-		console.log("getView-----------");
-		return (
-		  <View			
-			key={index}
-			>
-			<Text>
-			  {message.getUserName()}
-			  <Text> : {message.getContent()}</Text>
-			</Text>
-		  </View>
-		);		
+		console.log("getView2-----------");
+		return(
+			<View style={styles.view} key = {index}>
+				<Text style={styles.text} maxLength={12} multiline={false}>
+            		{message.getUserName()}
+            	</Text>
+            	<Text style={styles.text} maxLength={12} multiline={false}>
+            		{message.getContent()}
+            	</Text>
+        	</View>
+ 
+		);	
 	}				
 }
 
