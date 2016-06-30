@@ -8,6 +8,7 @@ import {
   TextInput,
   ScrollView,
   Dimensions,
+  LayoutAnimation,
   StyleSheet
 } from 'react-native';
 
@@ -126,10 +127,20 @@ class Chat extends Component{
 
     onCustomPress(){
     	LOG.v("onCustomPress"+this.state.message);
+      LayoutAnimation.spring();
     }
 
-    deleteMessage(message){
-      LOG.v("deleteMessage"+message);
+    deleteMessage(_message){
+      LOG.v("deleteMessage"+_message);
+      var _messageList = [];
+      LOG.v("deleteMessage"+this.state.messageList.length);
+      this.state.messageList.map((message, index) => {
+        if(_message != message)
+          _messageList.push(message);
+      });
+      LayoutAnimation.spring();
+      this.setState({messageList: _messageList});
+      LOG.v("deleteMessage"+this.state.messageList.length);
     }
 
  	render() {
@@ -137,7 +148,7 @@ class Chat extends Component{
 	  var list = this.state.messageList.map((message, index) => {
           LOG.v("CHAT render list message = "+message);
 		      //TODO fix the factory and use that
-          return (<UserMessageOutlineView message = {message} key={index}/>);
+          return (<UserMessageOutlineView message = {message} key={index} chat={this}/>);
           //var view = this.viewFactory.getView(index, message);
 		      //return view;
       		//WTH

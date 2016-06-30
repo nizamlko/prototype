@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Text,
   Image,
+  TouchableHighlight
 } from 'react-native';
 
 const LOG = require('components/log/logger.js');
@@ -35,6 +36,9 @@ class MessageHeader extends Component{
   constructor(props) {
 			super(props);
 	}
+  onPress() {
+    this.props.chat.deleteMessage(this.props.message);
+  }
   render(){
     if(this.props.display==false || this.props.display=="false")
       return null;
@@ -43,11 +47,11 @@ class MessageHeader extends Component{
           <View style = {styles.senderNameContainer}>
               <Text>{this.props.message.getUserName()}</Text>
           </View>
-          <TouchableOpacity onPress={this.props.chat.deleteMessage(this.props.message)}>
+          <TouchableHighlight onPress={this.onPress.bind(this)}>
               <View style = {styles.messageHeaderMetaContainer}>
                   <Image source={require('components/Images/star_on_message.png')}/>
               </View>
-          </TouchableOpacity>
+          </TouchableHighlight>
       </View>
     );
   }
