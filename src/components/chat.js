@@ -14,9 +14,9 @@ import {
 const LOG = require('components/log/logger.js');
 const styles = require('./styles.chat.js');
 const db = require('./db/deviceStorage.js');
-var windowSize = Dimensions.get('window');
-var Container = require('./container.js');
-var Container2 = require('./container2.js');
+const windowSize = Dimensions.get('window');
+const Container = require('./container.js');
+const Container2 = require('./container2.js');
 const TextMessage = require('components/datamodel/TextMessage.js');
 const MessageView = require('components/ui/MessageView.js');
 const UserMessageOutlineView = require('components/ui/UserMessageOutlineView.js');
@@ -125,7 +125,11 @@ class Chat extends Component{
     }
 
     onCustomPress(){
-    	console.log("onCustomPress"+this.state.message);
+    	LOG.v("onCustomPress"+this.state.message);
+    }
+
+    deleteMessage(message){
+      LOG.v("deleteMessage"+message);
     }
 
  	render() {
