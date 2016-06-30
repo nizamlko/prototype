@@ -55,13 +55,42 @@ class MessageBubble extends Component{
   constructor(props) {
 			super(props);
 	}
+  getMonthString(month){
+    if(month ==5)
+      return "JUN";
+    if(month ==6)
+      return "JUL"
+  }
+  formatDate(dateTime){
+    LOG.v("UserMessageOutlineView", dateTime);
+    var dateObj = new Date(dateTime);
+    var month = dateObj.getMonth();
+    var date = dateObj.getDate();
+    var hours = dateObj.getHours();
+    var min = dateObj.getMinutes();
+    var amPM = hours<12? "AM":"PM";
+    if(hours>12)
+      hours = hours-12;
+
+    return this.getMonthString(month)
+                +" "+date
+                +", "+hours
+                +":"+min
+                +" "+amPM;
+  }
 
   render(){
     LOG.v("MessageBubble display = "+this.props.display);
     if(this.props.display==false || this.props.display=="false")
 			return null;
     return(
-      <Text style = {styles.nameLabel}>{this.props.message.getContent()}</Text>
+      <View>
+        <Text style = {styles.textContent}>{this.props.message.getContent()}</Text>
+        <View style={styles.messageBubbleFooter}>
+          <Text style = {styles.date}>{this.formatDate(this.props.message.getDateTime())}</Text>
+          <Image source={require('components/Images/message_sent.png')}/>
+        </View>
+      </View>
     );
   }
 }
@@ -108,13 +137,24 @@ var styles = StyleSheet.create({
     flexDirection:'row',
     width:250
   },
-	nameLabel: {
+	textContent: {
 	    flex: 1,
 	    fontSize: 14,
-	    textAlign: 'center',
+	    textAlign: 'left',
 	    margin: 10,
+      alignSelf:'flex-start',
       width:250
 	},
+  messageBubbleFooter:{
+      flexDirection:'row',
+      alignSelf:'flex-end',
+  },
+  date:{
+    flex: 1,
+    fontSize: 12,
+    alignSelf:'flex-end',
+    padding:2
+  },
   headerLabel: {
       fontSize: 14,
       textAlign: 'center',

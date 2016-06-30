@@ -7,17 +7,15 @@ class TextMessage extends Message{
     	@conversationId:String
     	@content:String
     */
-	constructor(conversationId, userName, content, date) {
+	constructor(conversationId, userName, content, dateTime) {
 		super(conversationId, userName, MessageType.TEXT_MESSAGE);
 		 this.content = content;
-     this.date = date;
+     this.dateTime = dateTime;
 	}
 
 	//@return String
 	getContent(){ return this.content;}
-  getDate(){
-    return this.date;
-  }
+  getDateTime(){ return this.dateTime;}
 }
 
 module.exports = TextMessage;
