@@ -48,7 +48,7 @@ class Chat extends Component{
 
 	checkForPopulateDummyData(message){
 		if(message == "populate")
-			randomTest.populateChats(this.userName, 5000);
+			randomTest.populateChats(this.userName, 1000);
 	}
 
     _log(msg){
@@ -100,7 +100,7 @@ class Chat extends Component{
         	if(!value)
         		return;
         	var _messageList = [];
-        	for (var key in value) {            
+        	for (var key in value) {
   				//_messageList.push({user:this.userName, message:value[key]});
           _messageList.push(new TextMessage(this.conversationId, this.userName, value[key], new Date(Number(key)).getTime()));
 			}

@@ -4,9 +4,9 @@ import {
   View,
   TextInput,
   Text
-} from 'react-native'; 
+} from 'react-native';
 
-const styles = require('./styles.messageView.js');
+const styles = require('./styles/styles.messageView.js');
 
 class MessageView extends Component{
 	render() {
@@ -21,7 +21,7 @@ class MessageView extends Component{
 			  <Text style={styles.messageLabel}> : {this.props.message}</Text>
 			</Text>
 		  </View>
-		);		
+		);
 	}
 
 	static getView(index, message){
@@ -34,7 +34,7 @@ class MessageView extends Component{
             		{message.getContent()}
             	</Text>
         	</View>
- 
+
 		);
 	}
 
@@ -50,9 +50,9 @@ class MessageView extends Component{
             		{message.getContent()}
             	</Text>
         	</View>
- 
-		);	
-	}				
+
+		);
+	}
 }
 
 module.exports = MessageView;
