@@ -1,7 +1,7 @@
 'use strict';
-import {   
+import {
   StyleSheet
-} from 'react-native'; 
+} from 'react-native';
 
 var styles = StyleSheet.create({
     messageContainer: {
@@ -9,9 +9,9 @@ var styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'stretch',
       backgroundColor: '#ffffff'
-    },      
+    },
 	  view: {
-	    width: 250,	    
+	    width: 250,
 	    margin: 10,
 	    height: 70,
 	    borderColor: '#32C5E6',
@@ -23,15 +23,15 @@ var styles = StyleSheet.create({
 
 	  text: {
 	  	textDecorationLine:'none',
-	    width: 250,	    
+	    width: 250,
 	    padding: 5,
-	    height: 30,	    
+	    height: 30,
 	    color:'#32C5E6',
 	    borderWidth: 0,
 	    borderColor: '#ffffff',
-	    alignSelf: 'flex-start',	    
+	    alignSelf: 'flex-start',
 	  }
-  
+
   });
 
 module.exports = styles;

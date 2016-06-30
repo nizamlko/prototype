@@ -29,7 +29,7 @@ class Chat extends Component{
 		super(props);
 		this.state = {
 			message:'',
-			messageList:[new TextMessage(this.conversationId, "user1", "message1")]
+			messageList:[new TextMessage(this.conversationId, "user1", "message1", new Date().getTime())]
 
 		}
 
@@ -78,13 +78,13 @@ class Chat extends Component{
 			return;
 
 		this._log("sendMessage - "+content);
-		this.messageHandler.process(new TextMessage(this.conversationId, this.userName, content));
+		this.messageHandler.process(new TextMessage(this.conversationId, this.userName, content, new Date().getTime()));
 	}
 
 	componentWillMount() {
 	  console.log("componentWillMount");
 	  //var message ={user:"user2", message:"Message 22"};
-	  var message = new TextMessage(this.conversationId, "user2", "message2");
+	  var message = new TextMessage(this.conversationId, "user2", "message2", new Date().getTime());
 	  this.setState({messageList: this.state.messageList.concat([message])});
 	  this.loadMessages();
 	}
@@ -102,7 +102,8 @@ class Chat extends Component{
         	var _messageList = [];
         	for (var key in value) {
   				//_messageList.push({user:this.userName, message:value[key]});
-  				_messageList.push(new TextMessage(this.conversationId, this.userName, value[key]));
+          
+          _messageList.push(new TextMessage(this.conversationId, this.userName, value[key], new Date(key).getTime()));
 			}
 			this.setState({messageList: this.state.messageList.concat(_messageList)});
 		}).done();
@@ -131,10 +132,11 @@ class Chat extends Component{
  	render() {
     console.log("chat.render passprops "+this.props);
 	  var list = this.state.messageList.map((message, index) => {
+          LOG.v("CHAT render list message = "+message);
 		      //TODO fix the factory and use that
-          //return (<UserMessageOutlineView message = {message} key={index}/>);
-          var view = this.viewFactory.getView(index, message);
-		      return view;
+          return (<UserMessageOutlineView message = {message} key={index}/>);
+          //var view = this.viewFactory.getView(index, message);
+		      //return view;
       		//WTH
       		//return (<MessageView key={index} user="user1" message = "message1"/>);
       		/*
