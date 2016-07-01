@@ -8,22 +8,22 @@ const LOGLEVEL ={
   ERROR:6,
   ASSERT:7
 };
-const LOGGINGLEVEL = LOGLEVEL.VERBOSE;
+const LOGGINGLEVEL = LOGLEVEL.DEBUG;
 
-const log = {	
+const log = {
 	v(tag, msg){
 		this._log(LOGLEVEL.VERBOSE, tag, msg);
-	},	
+	},
 	d(tag, msg){
 		this._log(LOGLEVEL.DEBUG, tag, msg);
-	},	
+	},
 	i(tag, msg){
 		this._log(LOGLEVEL.INFO, tag, msg);
-	},		
+	},
 	w(tag, msg){
 		this._log(LOGLEVEL.WARN, tag, msg);
 	},
-	
+
 	e(tag, msg){
 		this._log(LOGLEVEL.ERROR, tag, msg);
 	},
@@ -44,7 +44,7 @@ const log = {
 			prefix = "ERROR: "
 		else if(loglevel == LOGLEVEL.ASSERT)
 			prefix = "ASSERT: "
-		
+
 		if(tag)
 			prefix = prefix + tag +" : ";
 
@@ -53,4 +53,3 @@ const log = {
 };
 
 module.exports = log;
-

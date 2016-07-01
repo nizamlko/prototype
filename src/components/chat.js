@@ -9,6 +9,7 @@ import {
   ScrollView,
   Dimensions,
   LayoutAnimation,
+  Animated,
   StyleSheet
 } from 'react-native';
 
@@ -130,7 +131,16 @@ class Chat extends Component{
       LayoutAnimation.spring();
     }
 
+    componentWillUpdate() {
+        LOG.v("CHAT","componentWillUpdate");
+        //LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+        // /LayoutAnimation.spring();
+        //LayoutAnimation.configureNext(CustomLayoutSpring);
+
+    }
+
     deleteMessage(_message){
+      return;
       LOG.v("deleteMessage"+_message);
       var _messageList = [];
       LOG.v("deleteMessage"+this.state.messageList.length);
@@ -138,7 +148,10 @@ class Chat extends Component{
         if(_message != message)
           _messageList.push(message);
       });
-      LayoutAnimation.spring();
+
+      //var config = layoutAnimationConfigs[1];
+      //LayoutAnimation.configureNext(config);
+     LayoutAnimation.configureNext(CustomLayoutSpring);
       this.setState({messageList: _messageList});
       LOG.v("deleteMessage"+this.state.messageList.length);
     }
@@ -222,4 +235,64 @@ class Chat extends Component{
 	  );
 	}
 }
+
+
+
+var CustomLayoutSpring = {
+    duration: 3000,
+    create: {
+      type: LayoutAnimation.Types.spring,
+      property: LayoutAnimation.Properties.scaleXY,
+      springDamping: 0.7,
+    },
+    update: {
+      type: LayoutAnimation.Types.spring,
+      springDamping: 0.7,
+    },
+  };
+
+// Linear with easing
+var CustomLayoutLinear = {
+    duration: 2000,
+    create: {
+      type: LayoutAnimation.Types.linear,
+      property: LayoutAnimation.Properties.opacity,
+    },
+    update: {
+      type: LayoutAnimation.Types.curveEaseInEaseOut,
+    },
+  };
+
+var animations = {
+  layout: {
+    spring: {
+      duration: 7500,
+      create: {
+        duration: 3000,
+        type: LayoutAnimation.Types.easeInEaseOut,
+        property: LayoutAnimation.Properties.opacity,
+      },
+      update: {
+        type: LayoutAnimation.Types.spring,
+        springDamping: 4000,
+      },
+    },
+    easeInEaseOut: {
+      duration: 3000,
+      create: {
+        type: LayoutAnimation.Types.easeInEaseOut,
+        property: LayoutAnimation.Properties.scaleXY,
+      },
+      update: {
+        delay: 1000,
+        type: LayoutAnimation.Types.easeInEaseOut,
+      },
+    },
+  },
+};
+
+var layoutAnimationConfigs = [
+  animations.layout.spring,
+  animations.layout.easeInEaseOut,
+];
 module.exports =Chat;

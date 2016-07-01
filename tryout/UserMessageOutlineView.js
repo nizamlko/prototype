@@ -4,6 +4,7 @@ import {
   View,
   TextInput,
   StyleSheet,
+  Animated,
   Text
 } from 'react-native';
 
@@ -11,6 +12,13 @@ const LOG = require('components/log/logger.js');
 class UserMessageOutlineView extends Component{
     constructor(props){
 		  super(props);
+    }
+
+    componentDidMount = ()=> {
+        Animated.timing(this.state._rowOpacity, {
+            toValue: 1,
+            duration: 1000,
+        }).start();
     }
 
     render(){

@@ -6,17 +6,45 @@ import {
   StyleSheet,
   Text,
   Image,
-  TouchableHighlight
+  Animated,
+  TouchableHighlight,
+  LayoutAnimation
 } from 'react-native';
 
 const LOG = require('components/log/logger.js');
 const styles = require('./styles/styles.userMessageOutlineView.js');
+const CAnimation = require('./anim/CustomAnimation.js');
 
 class UserMessageOutlineView extends Component{
     constructor(props){
 		  super(props);
+      var display = true;
+      if(this.props.display==false || this.props.display=="false")
+        display  = false;
+      this.state = {
+        display:display
+      }
+    }
+    componentDidMount(){
+      /*  Animated.timing(this.state._rowOpacity, {
+            toValue: 1,
+            duration: 1000,
+        }).start();
+        */
+    }
+    componentWillUpdate() {
+        LOG.d("CHAT","componentWillUpdate");
+        //LayoutAnimation.spring();
+        LayoutAnimation.configureNext(CAnimation[1]);
+    }
+    onHeaderDelete() {
+      console.log("----------------------onHeaderDelete");
+      LayoutAnimation.configureNext(CAnimation[0]);
+      this.setState({display:false});
     }
     render(){
+      if(!this.state.display)
+        return null;
       LOG.v("UserMessageOutlineView display = "+this.props.display);
       LOG.v("UserMessageOutlineView message = "+this.props.message);
       var message = this.props.message;
@@ -24,7 +52,7 @@ class UserMessageOutlineView extends Component{
         <View style={styles.container}>
             <RetryTextButton display={false}/>
             <View style = {styles.messageContentContainer}>
-                <MessageHeader message = {this.props.message} chat = {this.props.chat}/>
+                <MessageHeader message = {this.props.message} chat = {this.props.chat} onDelete = {this.onHeaderDelete.bind(this)}/>
                 <MessageBubble message = {this.props.message}/>
             </View>
         </View>
@@ -38,6 +66,7 @@ class MessageHeader extends Component{
 	}
   onPress() {
     this.props.chat.deleteMessage(this.props.message);
+    this.props.onDelete();
   }
   render(){
     if(this.props.display==false || this.props.display=="false")
@@ -102,12 +131,17 @@ class MessageBubble extends Component{
 }
 
 class RetryTextButton extends Component{
-  constructor(props) {
-			super(props);
-	}
-	render(){
+ constructor(props){
+    super(props);
+    var display = true;
+    if(this.props.display==false || this.props.display=="false")
+          display  = false;
+    this.state = {display:display}
+}
+
+ render(){
 		LOG.v("RetryTextButton display = "+this.props.display);
-		if(this.props.display==false || this.props.display=="false")
+		if(!this.state.display)
 			return null;
 		return(
       <View style = {styles.retryTextButton}>

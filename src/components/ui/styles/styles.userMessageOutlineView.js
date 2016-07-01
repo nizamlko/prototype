@@ -5,7 +5,7 @@ import {
 
 var styles = StyleSheet.create({
   container: {
-      flex: 1,
+      flex: 0,
       flexDirection:'row',
       paddingTop:2,
       paddingBottom:2,

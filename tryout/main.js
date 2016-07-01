@@ -9,13 +9,14 @@ import {
 var CustomComponents = require('./CustomComponents');
 var MessageView = require('./MessageView');
 var UserMessageOutlineView = require('./UserMessageOutlineView');
-
+var SimpleAnimation = require('./SimpleAnimation');
+var AddRemoveExample = require('./AddRemoveExample');
 
 class Main extends Component {
 
 render(){
   return(
-    <UserMessageOutlineView/>
+    <AddRemoveExample/>
   );
 }
   render3(){
